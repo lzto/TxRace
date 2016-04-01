@@ -1,0 +1,54 @@
+
+
+[bench]
+
+1. set up $PATH to llvm and wllvm (whole-program-llvm)
+
+$ git clone https://github.com/travitch/whole-program-llvm.git
+(For Ubuntu 10.04 where python 2.6.xx does not have argparse)
+$ sudo apt-get install python-argparse
+
+2. txbin-build.sh - take sources and generate .bc file
+
+3. txbin-backend.sh - take .bc file and generate executable file
+
+
+[neongoby]
+
+1. install as usual
+
+$ ./configure --prefix=`llvm-config --prefix`
+$ make
+$ make install
+
+2. neongoby/lib/Instrumenters/TxInstrumenter.cpp
+  
+  1) register and implment "tx-instrument" llvm pass
+
+  2) simplified from lib/Instrumenters/MemoryInstrumenter.cpp
+
+  3) instrument calls to TxHookInit, TxHookBeforeCall, TxHookAfterCall, TxHookEnter
+
+3. neongoby/runtime/TxHooks/TxHooks.cpp
+
+  1) generate "libTxHook.a" 
+
+  2) implement TxHookInit, TxHookBeforeCall, TxHookAfterCall, TxHookEnter
+
+
+[txbin]
+
+1. Makefile generates test_threads.bc file
+
+2. update LLVM_HOME=/home/dongyoon/project/llvm-3.1-debug in txbin-ng.sh and txbin-tx.sh
+
+3. (txbin) txbin-tx.sh takes <app>.bc file and 
+  1) instrument memory operations and generate new bc <app>.tx.bc (and readable <app>.tx.ll), and
+  2) generate executable <app>.ng.exe from <app>.tx.bc
+
+--- you don't need to use txbin-ng.sh. this is just for your reference ---
+
+4. (default neongoby) txbin-ng.sh takes <app>.bc file and 
+  1) instrument memory operations and generate new bc <app>.ng.bc (and readable <app>.ng.ll), and
+  2) generate executable <app>.ng.exe from <app>.ng.bc
+

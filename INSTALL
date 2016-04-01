@@ -1,0 +1,24 @@
+
+[XXX] To install LLVM 3.4.2
+http://llvm.org/docs/GettingStarted.html
+
+[XXX] To install whole-program-llvm
+https://github.com/travitch/whole-program-llvm
+$ git clone https://github.com/travitch/whole-program-llvm.git
+(For Ubuntu 10.04 where python 2.6.xx does not have argparse)
+$ sudo apt-get install python-argparse
+
+[XXX] To install Neongoby
+$ git clone https://github.com/columbia/neongoby.git
+$ cd [NEONGOBY_HOME]
+$ git submodule init
+$ git submodule update
+$ ./configure --prefix=`llvm-config --prefix`
+$ make
+$ make install
+
+[XXX] To install PIN
+
+download and install - https://software.intel.com/en-us/articles/pintool-downloads
+
+
